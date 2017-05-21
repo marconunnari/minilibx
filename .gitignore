@@ -1,2 +1,3 @@
 *.o
 libmlx.a
+mlx.h

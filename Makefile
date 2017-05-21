@@ -19,6 +19,7 @@ $(NOM):
 	@echo "version:" $(DIR)
 	make -C $(DIR)
 	cp $(DIR)/$(NOM) .
+	cp $(DIR)/mlx.h .
 
 clean:
 	make clean -C $(DIR)
