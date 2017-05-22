@@ -1,3 +1,5 @@
+LIBMLX= $(DLIBMLX)/libmlx.a
+LMLX= -L $(DLIBMLX) -lmlx
 OS := $(shell uname -s)
 ifeq ($(OS),Darwin)
 	LMLX += -framework OpenGL -framework AppKit
