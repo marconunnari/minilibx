@@ -1,4 +1,9 @@
-NOM=libmlx.a
+NAME=libmlx.a
+
+GCC= gcc -Wall -Wextra -Werror
+
+INCLUDES= -I includes -I $(DLIBFT)/includes
+HEADER= includes/mlx.h
 
 DIR=
 OS := $(shell uname -s)
@@ -13,16 +18,40 @@ else
 	DIR=x11
 endif
 
-all: $(NOM)
+DOBJS= objs
+DSRCS= srcs
 
-$(NOM):
-	@echo "version:" $(DIR)
+SRCS_FILES= fill_pixel fill_rect fill_square ft_swap_ints
+
+SRCS = $(addprefix $(DSRCS)/, $(addsuffix .c, $(SRCS_FILES)))
+OBJS = $(SRCS:$(DSRCS)/%.c=$(DOBJS)/%.o)
+
+all: $(NAME)
+
+$(DOBJS):
+	mkdir -p $(DOBJS)
+
+$(OBJS): $(DOBJS)/%.o: $(DSRCS)/%.c $(HEADER)
+	$(GCC) $(INCLUDES) -c $< -o $@
+
+start:
+	echo "making minilibx..."
+
+$(NAME): start $(DOBJS) $(OBJS) $(HEADER)
+	echo "version:" $(DIR)
 	make -C $(DIR)
-	cp $(DIR)/$(NOM) .
-	cp $(DIR)/mlx.h .
+	cp $(DIR)/$(NAME) $(DOBJS)/$(NAME)
+	ar -x $(DOBJS)/$(NAME)
+	mv mlx_*.o $(DOBJS)
+	rm -f $(DOBJS)/$(NAME)
+	ar rcs $(NAME) $(DOBJS)/*.o
+	echo "minilibx done!"
 
 clean:
-	make clean -C $(DIR)
-	rm -f $(NOM)
+	@make clean -C $(DIR)
+	@rm -rf $(DOBJS)
 
-re: clean all
+fclean: clean
+	rm -f $(NAME)
+
+re: fclean all
