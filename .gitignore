@@ -1,5 +1,5 @@
 *.o
 libmlx.a
-mlx.h
 x11/libmlx_Linux.a
 x11/test/mlx-test
+__.SYMDEF\ SORTED

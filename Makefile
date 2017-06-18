@@ -29,29 +29,29 @@ OBJS = $(SRCS:$(DSRCS)/%.c=$(DOBJS)/%.o)
 all: $(NAME)
 
 $(DOBJS):
-	mkdir -p $(DOBJS)
+	@mkdir -p $(DOBJS)
 
 $(OBJS): $(DOBJS)/%.o: $(DSRCS)/%.c $(HEADER)
-	$(GCC) $(INCLUDES) -c $< -o $@
+	@$(GCC) $(INCLUDES) -c $< -o $@
 
 start:
-	echo "making minilibx..."
+	@echo "making minilibx..."
 
 $(NAME): start $(DOBJS) $(OBJS) $(HEADER)
-	echo "version:" $(DIR)
-	make -C $(DIR)
-	cp $(DIR)/$(NAME) $(DOBJS)/$(NAME)
-	ar -x $(DOBJS)/$(NAME)
-	mv mlx_*.o $(DOBJS)
-	rm -f $(DOBJS)/$(NAME)
-	ar rcs $(NAME) $(DOBJS)/*.o
-	echo "minilibx done!"
+	@echo "version:" $(DIR)
+	@make -C $(DIR)
+	@cp $(DIR)/$(NAME) $(DOBJS)/$(NAME)
+	@ar -x $(DOBJS)/$(NAME)
+	@mv mlx_*.o $(DOBJS)
+	@rm -f $(DOBJS)/$(NAME)
+	@ar rcs $(NAME) $(DOBJS)/*.o
+	@echo "minilibx done!"
 
 clean:
 	@make clean -C $(DIR)
 	@rm -rf $(DOBJS)
 
 fclean: clean
-	rm -f $(NAME)
+	@rm -f $(NAME)
 
 re: fclean all
